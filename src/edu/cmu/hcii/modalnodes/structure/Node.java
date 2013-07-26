@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import processing.core.PApplet;
-import processing.core.PGraphics;
-import processing.core.PImage;
 import processing.core.PVector;
 import ddf.minim.AudioSample;
 import ddf.minim.Minim;

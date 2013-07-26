@@ -21,29 +21,6 @@ public class KinectUtilities {
 		parent.stroke(Sequencer.colors[userId]);
 		parent.fill(Sequencer.colors[userId]);
 		
-		/*
-		PVector head = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_HEAD);
-		PVector neck = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_NECK);
-		
-		PVector lShoulder = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER);
-		PVector lElbow = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_LEFT_ELBOW);
-		PVector lhand = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_LEFT_HAND);
-		
-		PVector rShoulder = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER);
-		PVector rElbow = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW);
-		PVector rhand = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_RIGHT_HAND);
-		
-		PVector torso = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_TORSO);
-		
-		PVector lHip = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_LEFT_HIP);
-		PVector lKnee = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_LEFT_KNEE);
-		PVector lFoot = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_LEFT_FOOT);
-		
-		PVector rHip = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_RIGHT_HIP);
-		PVector rKnee = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_RIGHT_KNEE);
-		PVector rFoot = getProjectionJointPosition(userId, SimpleOpenNI.SKEL_RIGHT_FOOT);		
-		*/
-		
 		drawProjectionLimb(parent, userId, SimpleOpenNI.SKEL_HEAD, SimpleOpenNI.SKEL_NECK);
 		 
 		drawProjectionLimb(parent, userId, SimpleOpenNI.SKEL_NECK, SimpleOpenNI.SKEL_LEFT_SHOULDER);
@@ -66,6 +43,14 @@ public class KinectUtilities {
 		drawProjectionLimb(parent, userId, SimpleOpenNI.SKEL_RIGHT_KNEE, SimpleOpenNI.SKEL_RIGHT_FOOT);
 				
 		parent.popStyle();
+	}
+	
+	public static void drawCreatePose(PApplet parent, int userId, int angleOffset) {
+		
+	}
+	
+	public static void drawPlacePose(PApplet parent, int userId, int angleOffset) {
+		
 	}
 	
 	/**

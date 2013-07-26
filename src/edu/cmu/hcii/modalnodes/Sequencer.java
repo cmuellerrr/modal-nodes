@@ -11,6 +11,9 @@ import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.core.PVector;
 import SimpleOpenNI.SimpleOpenNI;
+import edu.cmu.hcii.modalnodes.animation.HelpAnimation;
+import edu.cmu.hcii.modalnodes.animation.HelpCreate;
+import edu.cmu.hcii.modalnodes.animation.HelpPlace;
 import edu.cmu.hcii.modalnodes.structure.Node;
 import edu.cmu.hcii.modalnodes.structure.NodeGrid;
 import edu.cmu.hcii.modalnodes.structure.ParticleSwarm;
@@ -63,6 +66,8 @@ public class Sequencer extends PApplet {
 	
 	public static final int numUsers = 10;
 	
+	private Map<Integer, HelpAnimation> helps;
+	
 	/**
 	 * Make sure processing uses the right entry class.  We can add an 
 	 * an additional string of "--present" at position 0 in the array
@@ -71,7 +76,8 @@ public class Sequencer extends PApplet {
 	 * @param args
 	 */
 	public static void main(String args[]) {
-	    PApplet.main(new String[] { "edu.cmu.hcii.modalnodes.Sequencer" });
+		//add  "--present"  as [0] for full screen
+	    PApplet.main(new String[] { "--present",  "edu.cmu.hcii.modalnodes.Sequencer" });
 	}
 	
 	/**
@@ -139,6 +145,8 @@ public class Sequencer extends PApplet {
 			particles[i][0] = new ParticleSwarm(this, swarmSize, 150, 5, particleSpeed);
 			particles[i][1] = new ParticleSwarm(this, swarmSize, 150, 5, particleSpeed);
 		}
+		
+		helps = new HashMap<Integer, HelpAnimation>();
 	}
 	
 	/**
@@ -159,7 +167,7 @@ public class Sequencer extends PApplet {
 		noStroke();
 
 		kinect.update();
-		//image(kinect.depthImage(), 0, 0);
+		//image(kinect.depthImage(), 0, windowHeight-300, 400, 300);
 		
 		for (int i = 0; i <= numUsers; i++) {
 			
@@ -169,6 +177,8 @@ public class Sequencer extends PApplet {
 				}
 			} else if (kinect.isTrackingSkeleton(i)) {
 				pushStyle();
+				
+				if(helps.get(i) != null) helps.get(i).run();
 				
 				stroke(colors[i]);
 				fill(colors[i]);
@@ -283,6 +293,10 @@ public class Sequencer extends PApplet {
 		Node newNode = new Node(this, new PVector(x, y, 0), nodeRadius);
 		newNode.startFocus(userId);
 		focused.put(userId, newNode);
+		
+		if(helps.get(userId) != null) {
+			helps.put(userId, new HelpPlace(this, userId));
+		}
 	}
 
 	/**
@@ -297,6 +311,10 @@ public class Sequencer extends PApplet {
 			grid.addNode(focusedNode);
 			focusedNode.endFocus();
 			focused.put(userId, null);
+			
+			if(helps.get(userId) != null) {
+				helps.put(userId, null);
+			}
 		}
 	}
 	
@@ -324,6 +342,7 @@ public class Sequencer extends PApplet {
 	    log.info("New User Detected - " + userId);
 	    
 	    kinect.requestCalibrationSkeleton(userId, true);
+	    helps.put(userId, new HelpCreate(this, userId));
 	}
 	 
 	/**
